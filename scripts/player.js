@@ -2,20 +2,26 @@ export class Player {
   constructor(imgSrc, x, y) {
     this.image = new Image();
     this.image.src = imgSrc;
-    this.x = x;
-    this.y = y
+    this.pos = {x: x, y: y}
 
-    this.imgIsLoaded = false;
+    this.speed = 5;
+  }
 
-    this.image.onload = () => {
-      this.imgIsLoaded = true;
-    }
+  move(pos) {
+    let oldPos = this.pos;
+    let newPos = pos;
+
+    let dx = newPos.x - oldPos.x;
+    let dy = newPos.y - oldPos.y;
+
+    let hyp = Math.hypot(dx, dy);
+
+    this.pos.x += (dx / hyp) * this.speed;
+    this.pos.y += (dy / hyp) * this.speed;
   }
 
   draw(ctx) {
-    if (this.imgIsLoaded) {
-      ctx.drawImage(this.image, this.x, this.y);
-    }
+    ctx.drawImage(this.image, (this.pos.x + (this.image.width / 2)), this.pos.y);
   }
 
   update(ctx) {
