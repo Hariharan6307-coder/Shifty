@@ -16,15 +16,18 @@ export class Player {
 
     let hyp = Math.hypot(dx, dy);
 
-    this.pos.x += (dx / hyp) * this.speed;
-    this.pos.y += (dy / hyp) * this.speed;
+    if (hyp > 5) {
+      this.pos.x += (dx / hyp) * this.speed;
+      this.pos.y += (dy / hyp) * this.speed;
+    }
   }
 
   draw(ctx) {
-    ctx.drawImage(this.image, (this.pos.x + (this.image.width / 2)), this.pos.y);
+    ctx.drawImage(this.image, (this.pos.x - (this.image.width / 2)), this.pos.y);
   }
 
-  update(ctx) {
+  update(ctx, mousePos) {
     this.draw(ctx)
+    this.move(mousePos)
   }
 }
