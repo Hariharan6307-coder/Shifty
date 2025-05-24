@@ -40,7 +40,11 @@ export class Player {
 
     if (this.direction.left) this.rotationAngle -= 2;
     if (this.direction.right) this.rotationAngle += 2;
-    
+
+    if (this.direction.forward) {
+      this.pos.x += this.speed * Math.sin(this.rotationAngle * Math.PI / 180);
+      this.pos.y -= this.speed * Math.cos(this.rotationAngle * Math.PI / 180);
+    }
   }
 
   draw() {
