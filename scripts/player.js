@@ -1,5 +1,6 @@
 export class Player {
-  constructor(imgSrc, x, y) {
+  constructor(ctx, imgSrc, x, y) {
+    this.ctx = ctx
     this.image = new Image();
     this.image.src = imgSrc;
     this.pos = {x: x, y: y}
@@ -42,18 +43,16 @@ export class Player {
     
   }
 
-  draw(ctx) {
-    ctx.drawImage(this.image, this.pos.x - this.image.width / 2, this.pos.y - 56);
-
-    // ctx.save();
-    // ctx.translate(this.pos.x, this.pos.y);
-    // ctx.rotate(this.rotationAngle * Math.PI / 180);
-    // ctx.drawImage(this.image, -this.image.width / 2, -56);
-    // ctx.restore();
+  draw() {
+    this.ctx.save();
+    this.ctx.translate(this.pos.x, this.pos.y);
+    this.ctx.rotate(this.rotationAngle * Math.PI / 180);
+    this.ctx.drawImage(this.image, -this.image.width / 2, -56);
+    this.ctx.restore();
   }
 
-  update(ctx) {
-    this.draw(ctx)
+  update() {
+    this.draw()
     this.move()
   }
 }

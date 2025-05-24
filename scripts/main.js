@@ -27,13 +27,13 @@ function drawGrid() {
   }
 }
 
-const player = new Player("../images/player/player.png", canvas.width / 2, canvas.height / 2);
+const player = new Player(ctx, "../images/player/player.png", canvas.width / 2, canvas.height / 2);
 
 function gameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   drawGrid();
-  player.update(ctx);
+  player.update()
 
   requestAnimationFrame(gameLoop);
 }
