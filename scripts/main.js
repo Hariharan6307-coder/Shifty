@@ -27,13 +27,24 @@ function drawGrid() {
   }
 }
 
+let mouseX = 0;
+let mouseY = 0;
+let mousePos = {};
+canvas.addEventListener("mousemove", (event) => {
+  const rect = canvas.getBoundingClientRect();
+  mouseX = event.clientX - rect.left;
+  mouseY = event.clientY - rect.top;
+  mousePos = {x: mouseX, y: mouseY}
+});
+
+
 const player = new Player(ctx, "../images/player/player.png", "../images/player/eye.png", canvas.width / 2, canvas.height / 2);
 
 function gameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   drawGrid();
-  player.update()
+  player.update(mousePos)
 
   requestAnimationFrame(gameLoop);
 }
