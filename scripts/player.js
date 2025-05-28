@@ -1,8 +1,11 @@
 export class Player {
-  constructor(ctx, imgSrc, x, y) {
+  constructor(ctx, imgSrc, eyeImgSrc, x, y) {
     this.ctx = ctx
     this.image = new Image();
+    this.eyeImage = new Image();
+
     this.image.src = imgSrc;
+    this.eyeImage.src = eyeImgSrc;
     this.pos = {x: x, y: y}
 
     this.speed = 5;
@@ -52,6 +55,11 @@ export class Player {
     this.ctx.translate(this.pos.x, this.pos.y);
     this.ctx.rotate(this.rotationAngle * Math.PI / 180);
     this.ctx.drawImage(this.image, -this.image.width / 2, -56);
+    this.ctx.restore();
+
+    this.ctx.save();
+    this.ctx.translate(this.pos.x, this.pos.y);
+    this.ctx.drawImage(this.eyeImage, -this.eyeImage.width / 2, -this.eyeImage.height / 2);
     this.ctx.restore();
   }
 
