@@ -38,7 +38,7 @@ canvas.addEventListener("mousemove", (event) => {
 });
 
 
-const player = new Player(ctx, "../images/player/player.png", "../images/player/eye.png", canvas.width / 2, canvas.height / 2);
+const player = new Player(ctx, "../images/player/player.png", "../images/player/eye.png");
 
 function gameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
