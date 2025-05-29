@@ -1,9 +1,11 @@
 const eyeDisplacement = 7;
 const angularVelocity = 7;
 const angularAcceleration = 0.5;
-const angularFriction = 0.98;
+const angularFriction = 0.1; 
 
-const velocity = 5;
+const acceleration = 1;
+const velocity = 7;
+const friction = 0.05;
 
 export class Player {
   constructor(ctx, imgSrc, eyeImgSrc) {
@@ -15,7 +17,8 @@ export class Player {
     this.eyeImage.src = eyeImgSrc;
 
     this.pos = {x: 400, y: 300};
-    this.vel = {x: 0, y: 0};
+    this.vel = 0;
+    this.acc = 0;
 
     this.angularVel = 0;
     this.angularAcc = 0;
@@ -42,9 +45,9 @@ export class Player {
     this.direction.right = false;
     this.direction.left = false;
     this.direction.forward = false;
-    if (this.keys['w'] || this.keys['W']) {
-      this.direction.forward = true;
-    }
+    // if (this.keys['w'] || this.keys['W']) {
+    //   this.direction.forward = true;
+    // }
     if (this.keys['a'] || this.keys['A']) {
       this.direction.left = true;
     }
@@ -61,23 +64,31 @@ export class Player {
     };
     if (this.direction.right && this.direction.left) {
       this.angularAcc = 0;
+      this.direction.forward = true;
     }
 
     if (this.angularVel > angularVelocity) this.angularVel = angularVelocity;
     if (this.angularVel < -angularVelocity) this.angularVel = -angularVelocity;
 
     if (this.angularAcc == 0) {
-      this.angularVel *= angularFriction;
+      this.angularVel *= (1 - angularFriction);
       if (Math.abs(this.angularVel) < 0.001) this.angularVel = 0;
     }
 
     this.angularVel += this.angularAcc;
     this.rotationAngle += this.angularVel;
 
-    if (this.direction.forward) {
-      this.pos.x += velocity * Math.sin(this.rotationAngle * Math.PI / 180);
-      this.pos.y -= velocity * Math.cos(this.rotationAngle * Math.PI / 180);
-    }
+    this.acc = 0;
+    if (this.direction.forward) this.acc = acceleration;
+
+    if (this.vel > velocity) this.vel = velocity;
+
+    if (this.acc == 0) this.vel *= (1 - friction);
+
+    this.vel += this.acc;
+
+    this.pos.x += this.vel * Math.sin(this.rotationAngle * Math.PI / 180);
+    this.pos.y -= this.vel * Math.cos(this.rotationAngle * Math.PI / 180);
   }
 
   eyeMovement(mousePos) {
