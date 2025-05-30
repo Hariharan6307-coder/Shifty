@@ -1,4 +1,5 @@
 import {Player} from "./player.js";
+import { Enemy } from "./enemy.js";
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -39,12 +40,14 @@ canvas.addEventListener("mousemove", (event) => {
 
 
 const player = new Player(ctx, "../images/player/player.png", "../images/player/eye.png");
+const enemy = new Enemy(ctx, 400, 300);
 
 function gameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   drawGrid();
-  player.update(mousePos)
+  player.update(mousePos);
+  enemy.update(player.pos);
 
   requestAnimationFrame(gameLoop);
 }
