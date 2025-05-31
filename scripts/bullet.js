@@ -10,6 +10,8 @@ export class Bullet {
     this.pos = {x: x, y: y};
     this.vel = speed;
     this.rotationAngle = rotationAngle;
+
+    this.isHit = false;
   }
 
   move() {

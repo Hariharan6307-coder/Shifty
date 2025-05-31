@@ -41,7 +41,8 @@ export class Enemy {
       bullet.update();
       return (
         bullet.pos.x >= 0 && bullet.pos.x <= this.ctx.canvas.width &&
-        bullet.pos.y >= 0 && bullet.pos.y <= this.ctx.canvas.height
+        bullet.pos.y >= 0 && bullet.pos.y <= this.ctx.canvas.height &&
+        !bullet.isHit
       );
     });
   }

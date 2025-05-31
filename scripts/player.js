@@ -106,6 +106,7 @@ export class Player {
       if (distance <= collisionRadius + bullet.image.width / 2) {
         this.pos.x = 100;
         this.pos.y = 100;
+        bullet.isHit = true;
       }
     });
   }
