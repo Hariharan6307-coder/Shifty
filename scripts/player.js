@@ -7,6 +7,8 @@ const acceleration = 1;
 const velocity = 7;
 const friction = 0.05;
 
+const collisionRadius = 40;
+
 export class Player {
   constructor(ctx, imgSrc, eyeImgSrc) {
     this.ctx = ctx
@@ -95,6 +97,27 @@ export class Player {
     this.eyeRotationAngle = Math.atan2(x, y);
   }
 
+  checkBulletCollisions(bulletGroup) {
+    bulletGroup.forEach((bullet) => {
+      let dx = this.pos.x - bullet.pos.x;
+      let dy = this.pos.y - bullet.pos.y;
+      let distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (distance <= collisionRadius + bullet.image.width / 2) {
+        this.pos.x = 100;
+        this.pos.y = 100;
+      }
+    });
+  }
+
+  drawCollisionCircle() {
+    this.ctx.beginPath();
+    this.ctx.arc(this.pos.x, this.pos.y, collisionRadius, 0, 2 * Math.PI);
+    this.ctx.stroke();
+    this.ctx.fillStyle = 'white';
+    this.ctx.fill();
+  }
+
   draw() {
     this.ctx.save();
     this.ctx.translate(this.pos.x, this.pos.y);
@@ -107,6 +130,8 @@ export class Player {
     this.ctx.drawImage(this.eyeImage, -this.eyeImage.width / 2 - eyeDisplacement * Math.sin(this.eyeRotationAngle),
                        -this.eyeImage.height / 2 - eyeDisplacement * Math.cos(this.eyeRotationAngle));
     this.ctx.restore();
+
+    //this.drawCollisionCircle();
   }
 
   update(mousePos) {

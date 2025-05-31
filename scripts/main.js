@@ -43,11 +43,14 @@ const player = new Player(ctx, "../images/player/player.png", "../images/player/
 const enemy = new Enemy(ctx, player, 400, 300);
 
 function gameLoop(timeStamp) {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "#1C253C";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   drawGrid();
   enemy.update(timeStamp);
   player.update(mousePos);
+
+  player.checkBulletCollisions(enemy.bulletGroup);
 
   requestAnimationFrame(gameLoop);
 }
