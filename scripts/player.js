@@ -1,5 +1,5 @@
 const eyeDisplacement = 7;
-const angularVelocity = 7;
+const angularVelocity = 5;
 const angularAcceleration = 0.5;
 const angularFriction = 0.1; 
 
@@ -16,7 +16,7 @@ export class Player {
     this.image.src = imgSrc;
     this.eyeImage.src = eyeImgSrc;
 
-    this.pos = {x: 400, y: 300};
+    this.pos = {x: 100, y: 100};
     this.vel = 0;
     this.acc = 0;
 
@@ -45,9 +45,7 @@ export class Player {
     this.direction.right = false;
     this.direction.left = false;
     this.direction.forward = false;
-    // if (this.keys['w'] || this.keys['W']) {
-    //   this.direction.forward = true;
-    // }
+
     if (this.keys['a'] || this.keys['A']) {
       this.direction.left = true;
     }
