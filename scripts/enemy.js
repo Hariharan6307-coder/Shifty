@@ -1,6 +1,7 @@
 import { Bullet } from "./bullet.js";
 
 const eyeDisplacement = 7;
+const timeBetweenBullets = 2;
 
 export class Enemy {
   constructor(ctx, player, x, y) {
@@ -19,6 +20,7 @@ export class Enemy {
 
     this.setTime = 0;
     this.timeNow = 0;
+    this.timeInterval = timeBetweenBullets;
   }
 
   eyeMovement(playerPos) {
@@ -29,15 +31,19 @@ export class Enemy {
 
   fire() {
     this.eyeMovement(this.player.pos);
-    if (this.timeNow - this.setTime >= 2000) {
+    if (this.timeNow - this.setTime >= this.timeInterval * 1000) {
       let bullet = new Bullet(this.ctx, this.pos.x, this.pos.y, this.eyeRotationAngle);
       this.bulletGroup.push(bullet);
       this.setTime = this.timeNow;
     }
 
-    this.bulletGroup.forEach((bullet) => {
+    this.bulletGroup = this.bulletGroup.filter((bullet) => {
       bullet.update();
-    })
+      return (
+        bullet.pos.x >= 0 && bullet.pos.x <= this.ctx.canvas.width &&
+        bullet.pos.y >= 0 && bullet.pos.y <= this.ctx.canvas.height
+      );
+    });
   }
 
   draw() {
