@@ -48,11 +48,12 @@ class MainGame {
     });
   }
 
-  checkPlayerBulletCollisions(timeStamp) {
+  checkCollisions(timeStamp) {
     this.enemyGroup.forEach((enemy) => {
       enemy.update(timeStamp);
       this.player.checkBulletCollisions(enemy.bulletGroup);
     });
+    this.player.checkEnemyCollisions(this.enemyGroup);
   }
 
   update(timeStamp) {
@@ -61,7 +62,7 @@ class MainGame {
 
     this.drawGrid();
 
-    this.checkPlayerBulletCollisions(timeStamp);
+    this.checkCollisions(timeStamp);
 
     this.player.update(this.mousePos);
   }

@@ -111,6 +111,30 @@ export class Player {
     });
   }
 
+  checkEnemyCollisions(enemyGroup) {
+    enemyGroup.forEach((enemy) => {
+      let closeX = this.pos.x;
+      let closeY = this.pos.y;
+
+      if (this.pos.x >= enemy.pos.x + enemy.image.width / 2) closeX = enemy.pos.x + enemy.image.width / 2;
+      else if (this.pos.x <= enemy.pos.x - enemy.image.width / 2) closeX = enemy.pos.x - enemy.image.width / 2;
+
+      if (this.pos.y >= enemy.pos.y + enemy.image.height / 2) closeY = enemy.pos.y + enemy.image.height / 2;
+      else if (this.pos.y <= enemy.pos.y - enemy.image.height / 2) closeY = enemy.pos.y - enemy.image.height / 2;
+
+      let dx = this.pos.x - closeX;
+      let dy = this.pos.y - closeY;
+      let distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (distance <= collisionRadius) {
+        this.pos.x = 100;
+        this.pos.y = 100;
+      }
+
+    });
+
+  }
+
   drawCollisionCircle() {
     this.ctx.beginPath();
     this.ctx.arc(this.pos.x, this.pos.y, collisionRadius, 0, 2 * Math.PI);
