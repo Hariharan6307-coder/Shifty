@@ -5,6 +5,7 @@ const acceleration = 0.2;
 const friction = 0.05;
 const timeBetweenBullets = 2;
 const playerDistance = 350;
+const collisionRadius = 40;
 
 export class Enemy {
   constructor(ctx, player, x, y) {
@@ -26,6 +27,7 @@ export class Enemy {
     this.timeInterval = timeBetweenBullets;
 
     this.isHit = false;
+    this.collisionRadius = collisionRadius;
   }
 
   eyeMovement(playerPos) {
@@ -74,12 +76,22 @@ export class Enemy {
     });
   }
 
+  drawCollisionCircle() {
+    this.ctx.beginPath();
+    this.ctx.arc(this.pos.x, this.pos.y, this.collisionRadius, 0, 2 * Math.PI);
+    this.ctx.stroke();
+    this.ctx.fillStyle = 'white';
+    this.ctx.fill();
+  }
+
   draw() {
     this.ctx.save();
     this.ctx.translate(this.pos.x, this.pos.y);
     this.ctx.rotate(this.eyeRotationAngle);
     this.ctx.drawImage(this.image, -this.image.width / 2, -this.image.height / 2);
     this.ctx.restore();
+
+    //this.drawCollisionCircle();
   }
 
   update(timeNow) {

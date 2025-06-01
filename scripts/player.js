@@ -113,23 +113,13 @@ export class Player {
 
   checkEnemyCollisions(enemyGroup) {
     enemyGroup.forEach((enemy) => {
-      let closeX = this.pos.x;
-      let closeY = this.pos.y;
-
-      if (this.pos.x >= enemy.pos.x + enemy.image.width / 2) closeX = enemy.pos.x + enemy.image.width / 2;
-      else if (this.pos.x <= enemy.pos.x - enemy.image.width / 2) closeX = enemy.pos.x - enemy.image.width / 2;
-
-      if (this.pos.y >= enemy.pos.y + enemy.image.height / 2) closeY = enemy.pos.y + enemy.image.height / 2;
-      else if (this.pos.y <= enemy.pos.y - enemy.image.height / 2) closeY = enemy.pos.y - enemy.image.height / 2;
-
-      let dx = this.pos.x - closeX;
-      let dy = this.pos.y - closeY;
+      let dx = this.pos.x - enemy.pos.x;
+      let dy = this.pos.y - enemy.pos.y;
       let distance = Math.sqrt(dx * dx + dy * dy);
 
-      if (distance <= collisionRadius) {
+      if (distance <= collisionRadius + enemy.collisionRadius) {
         enemy.isHit = true;
       }
-
     });
 
   }
