@@ -9,14 +9,14 @@ export class Bullet {
 
     this.pos = {x: x, y: y};
     this.vel = speed;
-    this.rotationAngle = rotationAngle;
+    this.rotationAngle = rotationAngle + Math.PI / 2;
 
     this.isHit = false;
   }
 
   move() {
-    this.pos.x -= this.vel * Math.sin(this.rotationAngle);
-    this.pos.y -= this.vel * Math.cos(this.rotationAngle);
+    this.pos.x -= this.vel * Math.cos(this.rotationAngle);
+    this.pos.y -= this.vel * Math.sin(this.rotationAngle);
   }
 
   draw() {
