@@ -51,9 +51,9 @@ class MainGame {
   checkCollisions(timeStamp) {
     this.enemyGroup.forEach((enemy) => {
       if (!enemy.isHit) enemy.update(timeStamp);
-      this.player.checkBulletCollisions(enemy.bulletGroup);
+      //this.player.checkBulletCollisions(enemy.bulletGroup);
     });
-    this.player.checkEnemyCollisions(this.enemyGroup);
+    //this.player.checkEnemyCollisions(this.enemyGroup);
   }
 
   update(timeStamp) {
@@ -62,9 +62,8 @@ class MainGame {
 
     this.drawGrid();
 
-    this.checkCollisions(timeStamp);
-
     this.player.update(this.mousePos);
+    this.checkCollisions(timeStamp);
   }
 
   gameLoop = (timeStamp) => {
