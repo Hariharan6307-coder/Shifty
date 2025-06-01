@@ -127,8 +127,7 @@ export class Player {
       let distance = Math.sqrt(dx * dx + dy * dy);
 
       if (distance <= collisionRadius) {
-        this.pos.x = 100;
-        this.pos.y = 100;
+        enemy.isHit = true;
       }
 
     });

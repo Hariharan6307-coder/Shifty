@@ -21,6 +21,8 @@ export class Enemy {
     this.setTime = 0;
     this.timeNow = 0;
     this.timeInterval = timeBetweenBullets;
+
+    this.isHit = false;
   }
 
   eyeMovement(playerPos) {
