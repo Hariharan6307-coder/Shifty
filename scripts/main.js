@@ -8,16 +8,16 @@ canvas.width = 800
 canvas.height = 600
 
 const gridSize = 50;
+const enemySpawnTime = 2;
 
 class MainGame {
   constructor() {
     this.player = new Player(ctx, "../images/player/player.png", "../images/player/eye.png");
     this.enemyGroup = [];
 
-    let enemy = new Enemy(ctx, this.player, 400, 300);
-    this.enemyGroup.push(enemy);
-
     this.getMousePos();
+    this.timeNow = 0;
+    this.setTime = 0;
   }
 
   drawGrid() {
@@ -48,10 +48,44 @@ class MainGame {
     });
   }
 
+  generateEnemies() {
+    let side = Math.floor(Math.random() * 4);
+    let margin = 100;
+
+    let x, y;
+
+    switch (side) {
+      case 0: // Left Side
+        x = -margin;
+        y = Math.random() * canvas.height;
+        break;
+      case 1: // Top Side
+        x = Math.random() * canvas.width;
+        y = -margin;
+        break;
+      case 2: // Right Side
+        x = canvas.width + margin;
+        y = Math.random() * canvas.height;
+        break;
+      case 3: // Bottom Side
+        x = Math.random() * canvas.width;
+        y = canvas.height + margin;
+        break;
+    }
+
+    if (this.timeNow - this.setTime >= enemySpawnTime * 1000) {
+      let enemy = new Enemy(ctx, this.player, x, y);
+      this.enemyGroup.push(enemy);
+      this.setTime = this.timeNow;
+    }
+  }
+
   checkCollisions(timeStamp) {
-    this.enemyGroup.forEach((enemy) => {
-      if (!enemy.isHit) enemy.update(timeStamp);
-      this.player.checkBulletCollisions(enemy.bulletGroup);
+    this.enemyGroup = this.enemyGroup.filter((enemy) => {
+      enemy.update(timeStamp);
+      return (
+        !enemy.isHit
+      );
     });
     this.player.checkEnemyCollisions(this.enemyGroup);
   }
@@ -63,10 +97,12 @@ class MainGame {
     this.drawGrid();
 
     this.player.update(this.mousePos);
+    this.generateEnemies();
     this.checkCollisions(timeStamp);
   }
 
   gameLoop = (timeStamp) => {
+    this.timeNow = timeStamp;
     this.update(timeStamp)
     requestAnimationFrame(this.gameLoop);
   }

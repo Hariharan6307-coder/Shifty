@@ -96,9 +96,9 @@ export class Enemy {
 
   update(timeNow) {
     this.timeNow = timeNow;
-    this.draw();
     this.eyeMovement(this.player.pos);
     this.moveTowardsPlayer(this.player.pos);
     this.fire();
+    this.draw();
   }
 }
