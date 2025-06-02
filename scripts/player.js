@@ -121,7 +121,7 @@ export class Player {
     });
   }
 
-  updateEnemyParticles() {
+  updateParticles() {
     this.particles = this.particles.filter((particle) => {
       particle.update();
       return particle.alpha;
@@ -170,7 +170,7 @@ export class Player {
   }
 
   update(mousePos) {
-    this.updateEnemyParticles();
+    this.updateParticles();
     this.draw()
     this.move()
     this.eyeMovement(mousePos)

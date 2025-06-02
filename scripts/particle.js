@@ -62,3 +62,18 @@ export class PlayerParticle extends Particle {
     this.friction = (1 - playerParticleFriction);
   }
 }
+
+
+const rocketParticleSize = 7;
+const rocketParticleVel = 2;
+const rocketParticleFriction = 0.1;
+export class RocketParticle extends Particle {
+  constructor(ctx, x, y) {
+    super(ctx, x, y) 
+      this.radius = Math.ceil(Math.random() * rocketParticleSize);
+      this.color = Math.random() > 0.5? "red": "yellow";
+      this.vel = Math.ceil(Math.random() * rocketParticleVel);
+      this.friction = (1 - rocketParticleFriction);
+      this.angle = Math.PI / 3;
+  }
+}
