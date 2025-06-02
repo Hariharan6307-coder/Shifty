@@ -8,7 +8,7 @@ canvas.width = 800
 canvas.height = 600
 
 const gridSize = 50;
-const enemySpawnTime = 2;
+const enemySpawnTime = 3;
 
 class MainGame {
   constructor() {
@@ -83,6 +83,7 @@ class MainGame {
   checkCollisions(timeStamp) {
     this.enemyGroup = this.enemyGroup.filter((enemy) => {
       enemy.update(timeStamp);
+      this.player.checkBulletCollisions(enemy.bulletGroup);
       return (
         !enemy.isHit
       );
@@ -93,9 +94,7 @@ class MainGame {
   update(timeStamp) {
     ctx.fillStyle = "#1C253C";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    this.drawGrid();
-
+    //this.drawGrid();
     this.player.update(this.mousePos);
     this.generateEnemies();
     this.checkCollisions(timeStamp);

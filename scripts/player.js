@@ -1,3 +1,5 @@
+import { EnemyParticle, PlayerParticle } from "./particle.js";
+
 const eyeDisplacement = 7;
 const angularVelocity = 5;
 const angularAcceleration = 0.5;
@@ -8,6 +10,10 @@ const velocity = 7;
 const friction = 0.05;
 
 const collisionRadius = 40;
+
+const noOfEnemyParticles = 100;
+const noOfPlayerParticles = 100;
+
 
 export class Player {
   constructor(ctx, imgSrc, eyeImgSrc) {
@@ -21,6 +27,7 @@ export class Player {
     this.pos = {x: 100, y: 100};
     this.vel = 0;
     this.acc = 0;
+    this.particles = [];
 
     this.angularVel = 0;
     this.angularAcc = 0;
@@ -42,7 +49,7 @@ export class Player {
       this.keys[e.key] = false;
     })
   }
-
+  
   move() {
     this.direction.right = false;
     this.direction.left = false;
@@ -104,10 +111,20 @@ export class Player {
       let distance = Math.sqrt(dx * dx + dy * dy);
 
       if (distance <= collisionRadius + bullet.image.width / 2) {
+        for (let i = 0; i < noOfPlayerParticles; i++) {
+          this.particles.push(new PlayerParticle(this.ctx, this.pos.x, this.pos.y));
+        }
         this.pos.x = 100;
         this.pos.y = 100;
         bullet.isHit = true;
       }
+    });
+  }
+
+  updateEnemyParticles() {
+    this.particles = this.particles.filter((particle) => {
+      particle.update();
+      return particle.alpha;
     });
   }
 
@@ -119,6 +136,10 @@ export class Player {
 
       if (distance <= collisionRadius + enemy.collisionRadius) {
         enemy.isHit = true;
+
+        for (let i = 0; i < noOfEnemyParticles; i++) {
+          this.particles.push(new EnemyParticle(this.ctx, enemy.pos.x, enemy.pos.y));
+        }
       }
     });
 
@@ -149,6 +170,7 @@ export class Player {
   }
 
   update(mousePos) {
+    this.updateEnemyParticles();
     this.draw()
     this.move()
     this.eyeMovement(mousePos)
