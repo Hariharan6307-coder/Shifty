@@ -21,9 +21,11 @@ export class Player {
     this.ctx = ctx
     this.image = new Image();
     this.eyeImage = new Image();
+    this.lightImage = new Image();
 
     this.image.src = imgSrc;
     this.eyeImage.src = eyeImgSrc;
+    this.lightImage.src = "../images/player/light.png";
 
     this.pos = {x: 100, y: 100};
     this.vel = 0;
@@ -181,6 +183,12 @@ export class Player {
     this.ctx.translate(this.pos.x, this.pos.y);
     this.ctx.drawImage(this.eyeImage, -this.eyeImage.width / 2 - eyeDisplacement * Math.sin(this.eyeRotationAngle),
                        -this.eyeImage.height / 2 - eyeDisplacement * Math.cos(this.eyeRotationAngle));
+    this.ctx.restore();
+
+    this.ctx.save();
+    this.ctx.translate(this.pos.x, this.pos.y)
+    this.ctx.rotate(-this.eyeRotationAngle + Math.PI)
+    this.ctx.drawImage(this.lightImage, - this.lightImage.width / 2, 0);
     this.ctx.restore();
 
     //this.drawCollisionCircle();
