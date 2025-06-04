@@ -83,7 +83,7 @@ class MainGame {
   checkCollisions(timeStamp) {
     this.enemyGroup = this.enemyGroup.filter((enemy) => {
       enemy.update(timeStamp);
-      this.player.checkBulletCollisions(enemy.bulletGroup);
+      //this.player.checkBulletCollisions(enemy.bulletGroup);
       return (
         !enemy.isHit
       );

@@ -1,4 +1,4 @@
-import { EnemyParticle, PlayerParticle } from "./particle.js";
+import { EnemyParticle, PlayerParticle, RocketParticle } from "./particle.js";
 
 const eyeDisplacement = 7;
 const angularVelocity = 5;
@@ -13,6 +13,7 @@ const collisionRadius = 40;
 
 const noOfEnemyParticles = 100;
 const noOfPlayerParticles = 100;
+const noOfRocketParticles = 3;
 
 
 export class Player {
@@ -98,6 +99,22 @@ export class Player {
     this.pos.y -= this.vel * Math.cos(this.rotationAngle * Math.PI / 180);
   }
 
+  generateRocketParticles () {
+    if (this.direction.forward) {
+      for (let i = 0; i < noOfRocketParticles; i++) {
+        this.particles.push(new RocketParticle(this.ctx, 
+          this.pos.x + 40 * Math.sin((this.rotationAngle - 138) * Math.PI / 180), 
+          this.pos.y - 40 * Math.cos((this.rotationAngle - 138) * Math.PI / 180), 
+          this.rotationAngle + 90));
+
+        this.particles.push(new RocketParticle(this.ctx,
+          this.pos.x + 40 * Math.sin((this.rotationAngle + 138) * Math.PI / 180),
+          this.pos.y - 40 * Math.cos((this.rotationAngle + 138) * Math.PI / 180),
+          this.rotationAngle + 90));
+      }
+    }
+  }
+
   eyeMovement(mousePos) {
     let x = this.pos.x - mousePos.x;
     let y = this.pos.y - mousePos.y;
@@ -170,9 +187,11 @@ export class Player {
   }
 
   update(mousePos) {
+    this.generateRocketParticles();
     this.updateParticles();
     this.draw()
     this.move()
     this.eyeMovement(mousePos)
+    //this.updateParticles();
   }
 }
