@@ -31,6 +31,7 @@ export class Player {
     this.vel = 0;
     this.acc = 0;
     this.particles = [];
+    this.isLight = false;
 
     this.angularVel = 0;
     this.angularAcc = 0;
@@ -47,6 +48,9 @@ export class Player {
     this.keys = {};
     document.addEventListener('keydown', (e) => {
       this.keys[e.key] = true;
+      if (e.code == "Space") {
+        this.isLight = !this.isLight;
+    }
     });
     document.addEventListener('keyup', (e) => {
       this.keys[e.key] = false;
@@ -185,11 +189,13 @@ export class Player {
                        -this.eyeImage.height / 2 - eyeDisplacement * Math.cos(this.eyeRotationAngle));
     this.ctx.restore();
 
-    this.ctx.save();
-    this.ctx.translate(this.pos.x, this.pos.y)
-    this.ctx.rotate(-this.eyeRotationAngle + Math.PI)
-    this.ctx.drawImage(this.lightImage, - this.lightImage.width / 2, 0);
-    this.ctx.restore();
+    if (this.isLight) {
+      this.ctx.save();
+      this.ctx.translate(this.pos.x, this.pos.y)
+      this.ctx.rotate(-this.eyeRotationAngle + Math.PI)
+      this.ctx.drawImage(this.lightImage, - this.lightImage.width / 2, 0);
+      this.ctx.restore();
+    }
 
     //this.drawCollisionCircle();
   }
