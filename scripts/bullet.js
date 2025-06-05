@@ -12,9 +12,11 @@ export class Bullet {
     this.rotationAngle = rotationAngle + Math.PI / 2;
 
     this.isHit = false;
+    this.speedMultiplier = 1;
   }
 
   move() {
+    this.vel *= this.speedMultiplier;
     this.pos.x -= this.vel * Math.cos(this.rotationAngle);
     this.pos.y -= this.vel * Math.sin(this.rotationAngle);
   }

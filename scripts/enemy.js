@@ -28,6 +28,7 @@ export class Enemy {
 
     this.isHit = false;
     this.collisionRadius = collisionRadius;
+    this.speedMultiplier = 1;
   }
 
   eyeMovement(playerPos) {
@@ -40,7 +41,7 @@ export class Enemy {
     let xDistance = (this.pos.x - playerPos.x);
     let yDistance = (this.pos.y - playerPos.y);
     let distance = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
-    
+
     if (distance > playerDistance) {
       this.vel += this.acc;
 
@@ -55,6 +56,7 @@ export class Enemy {
       }
     }
 
+    this.vel *= this.speedMultiplier;
     this.pos.x += this.vel * Math.sin(this.eyeRotationAngle);
     this.pos.y -= this.vel * Math.cos(this.eyeRotationAngle);
   }

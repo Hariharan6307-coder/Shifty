@@ -15,6 +15,8 @@ const noOfEnemyParticles = 100;
 const noOfPlayerParticles = 100;
 const noOfRocketParticles = 3;
 
+const enemyRangeAngle = 80;
+
 
 export class Player {
   constructor(ctx, imgSrc, eyeImgSrc) {
@@ -125,6 +127,28 @@ export class Player {
     let x = this.pos.x - mousePos.x;
     let y = this.pos.y - mousePos.y;
     this.eyeRotationAngle = Math.atan2(x, y);
+  }
+
+  slowDownEnemies(enemyGroup) {
+    if (this.isLight) {
+      enemyGroup.forEach((enemy) => {
+        let x = this.pos.x - enemy.pos.x;
+        let y = this.pos.y - enemy.pos.y;
+        let enemyAngle = Math.atan2(x, y);
+
+        if (Math.abs(this.eyeRotationAngle - enemyAngle) * 180 / Math.PI <= enemyRangeAngle / 2) {
+          enemy.speedMultiplier = 0.5;
+        }
+        else {
+          enemy.speedMultiplier = 1;
+        }
+      });
+    }
+    else {
+      enemyGroup.forEach((enemy) => {
+        enemy.speedMultiplier = 1;
+      })
+    }
   }
 
   checkBulletCollisions(bulletGroup) {

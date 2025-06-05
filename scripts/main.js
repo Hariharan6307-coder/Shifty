@@ -14,6 +14,8 @@ class MainGame {
   constructor() {
     this.player = new Player(ctx, "../images/player/player.png", "../images/player/eye.png");
     this.enemyGroup = [];
+    // let enemy = new Enemy(ctx, this.player, 400, 300);
+    // this.enemyGroup.push(enemy);
 
     this.getMousePos();
     this.timeNow = 0;
@@ -97,6 +99,7 @@ class MainGame {
     //this.drawGrid();
     this.player.update(this.mousePos);
     this.generateEnemies();
+    this.player.slowDownEnemies(this.enemyGroup);
     this.checkCollisions(timeStamp);
   }
 
