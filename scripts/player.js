@@ -132,6 +132,19 @@ export class Player {
   slowDownEnemies(enemyGroup) {
     if (this.isLight) {
       enemyGroup.forEach((enemy) => {
+        enemy.bulletGroup.forEach((bullet) => {
+          let bx = this.pos.x - bullet.pos.x;
+          let by = this.pos.y - bullet.pos.y;
+          let bulletAngle = Math.atan2(bx, by);
+
+          if (Math.abs(this.eyeRotationAngle - bulletAngle) * 180 / Math.PI <= enemyRangeAngle / 2) {
+            bullet.speedMultiplier = 0.25;
+          }
+          else {
+            bullet.speedMultiplier = 1;
+          }
+        });
+
         let x = this.pos.x - enemy.pos.x;
         let y = this.pos.y - enemy.pos.y;
         let enemyAngle = Math.atan2(x, y);
@@ -146,6 +159,9 @@ export class Player {
     }
     else {
       enemyGroup.forEach((enemy) => {
+        enemy.bulletGroup.forEach((bullet) => {
+          bullet.speedMultiplier = 1;
+        })
         enemy.speedMultiplier = 1;
       })
     }

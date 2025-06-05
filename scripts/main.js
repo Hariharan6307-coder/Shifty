@@ -4,8 +4,8 @@ import { Enemy } from "./enemy.js";
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-canvas.width = 800
-canvas.height = 600
+canvas.width = 1200
+canvas.height = 650
 
 const gridSize = 50;
 const enemySpawnTime = 3;
@@ -14,8 +14,6 @@ class MainGame {
   constructor() {
     this.player = new Player(ctx, "../images/player/player.png", "../images/player/eye.png");
     this.enemyGroup = [];
-    // let enemy = new Enemy(ctx, this.player, 400, 300);
-    // this.enemyGroup.push(enemy);
 
     this.getMousePos();
     this.timeNow = 0;
