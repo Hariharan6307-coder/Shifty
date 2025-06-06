@@ -15,7 +15,7 @@ const noOfEnemyParticles = 100;
 const noOfPlayerParticles = 100;
 const noOfRocketParticles = 3;
 
-const enemyRangeAngle = 80;
+const enemyRangeAngle = 45;
 
 const scoreDisplay = document.querySelector(".score");
 
