@@ -62,7 +62,7 @@ export class Enemy {
   }
 
   fire() {
-    if (this.timeNow - this.setTime >= this.timeInterval * 1000) {
+    if (this.timeNow - this.setTime >= this.timeInterval * 1000 / this.speedMultiplier) {
       let bullet = new Bullet(this.ctx, this.pos.x, this.pos.y, this.eyeRotationAngle);
       this.bulletGroup.push(bullet);
       this.setTime = this.timeNow;

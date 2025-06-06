@@ -17,6 +17,7 @@ const noOfRocketParticles = 3;
 
 const enemyRangeAngle = 80;
 
+const scoreDisplay = document.querySelector(".score");
 
 export class Player {
   constructor(ctx, imgSrc, eyeImgSrc) {
@@ -40,6 +41,8 @@ export class Player {
 
     this.rotationAngle = 0;
     this.eyeRotationAngle = 0;
+
+    this.killCount = 0;
 
     this.direction = {
       forward: false,
@@ -199,6 +202,8 @@ export class Player {
 
       if (distance <= collisionRadius + enemy.collisionRadius) {
         enemy.isHit = true;
+        this.killCount += 1;
+        scoreDisplay.innerHTML = `: ${this.killCount}`;
 
         for (let i = 0; i < noOfEnemyParticles; i++) {
           this.particles.push(new EnemyParticle(this.ctx, enemy.pos.x, enemy.pos.y));
