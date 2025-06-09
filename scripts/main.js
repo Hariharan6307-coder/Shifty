@@ -5,10 +5,14 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 canvas.width = 1200
-canvas.height = 650
+canvas.height = 600
 
 const gridSize = 50;
 const enemySpawnTime = 3;
+
+const gameOverMenu = document.querySelector(".game-over-menu");
+const restartButton = document.querySelector(".start-button");
+const scoreDisplay = document.querySelector(".score");
 
 class MainGame {
   constructor() {
@@ -83,7 +87,7 @@ class MainGame {
   checkCollisions(timeStamp) {
     this.enemyGroup = this.enemyGroup.filter((enemy) => {
       enemy.update(timeStamp);
-      //this.player.checkBulletCollisions(enemy.bulletGroup);
+      this.player.checkBulletCollisions(enemy.bulletGroup);
       return (
         !enemy.isHit
       );
@@ -108,6 +112,14 @@ class MainGame {
   }
 }
 
-const mainGame = new MainGame();
+let mainGame = new MainGame();
 mainGame.gameLoop();
+
+restartButton.addEventListener('click', () => {
+  gameOverMenu.style.display = 'none';
+  mainGame = new MainGame();
+  mainGame.player.killCount = 0;
+  scoreDisplay.innerHTML = ": 0";
+  mainGame.gameLoop();
+});
 

@@ -18,6 +18,8 @@ const noOfRocketParticles = 3;
 const enemyRangeAngle = 45;
 
 const scoreDisplay = document.querySelector(".score");
+const gameOverMenu = document.querySelector(".game-over-menu");
+const gameOverScoreDisplay = document.querySelector(".score-title")
 
 export class Player {
   constructor(ctx, imgSrc, eyeImgSrc) {
@@ -30,7 +32,7 @@ export class Player {
     this.eyeImage.src = eyeImgSrc;
     this.lightImage.src = "../images/player/light.png";
 
-    this.pos = {x: 100, y: 100};
+    this.pos = {x: this.ctx.canvas.width / 2, y: this.ctx.canvas.height / 2};
     this.vel = 0;
     this.acc = 0;
     this.particles = [];
@@ -43,6 +45,7 @@ export class Player {
     this.eyeRotationAngle = 0;
 
     this.killCount = 0;
+    this.isHit = false;
 
     this.direction = {
       forward: false,
@@ -180,9 +183,11 @@ export class Player {
         for (let i = 0; i < noOfPlayerParticles; i++) {
           this.particles.push(new PlayerParticle(this.ctx, this.pos.x, this.pos.y));
         }
-        this.pos.x = 100;
-        this.pos.y = 100;
+        this.pos.x = this.ctx.canvas.width / 2;
+        this.pos.y = -500;
         bullet.isHit = true;
+        this.isHit = true;
+        gameOverMenu.style.display = 'flex';
       }
     });
   }
@@ -204,6 +209,7 @@ export class Player {
         enemy.isHit = true;
         this.killCount += 1;
         scoreDisplay.innerHTML = `: ${this.killCount}`;
+        gameOverScoreDisplay.innerHTML = `${this.killCount}`;
 
         for (let i = 0; i < noOfEnemyParticles; i++) {
           this.particles.push(new EnemyParticle(this.ctx, enemy.pos.x, enemy.pos.y));
@@ -249,7 +255,7 @@ export class Player {
     this.generateRocketParticles();
     this.updateParticles();
     this.draw()
-    this.move()
+    if (!this.isHit) this.move();
     this.eyeMovement(mousePos)
     //this.updateParticles();
   }

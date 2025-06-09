@@ -11,6 +11,7 @@
       border: 0;
       height: 100vh;
       background-color: black;
+      font-family: 'Trebuchet MS', sans-serif;
 
       display: flex;
       justify-content: center;
@@ -25,7 +26,7 @@
       z-index: 1000;
       right: 100px;
       top: 50px;
-      font-family: 'Trebuchet MS', sans-serif;
+      
       background-color: rgb(128, 128, 128, 0.5);
       color: white;
       font-weight: 700;
@@ -41,12 +42,72 @@
       width: 40px;
       margin-right: 50px;
     }
+
+    .game-over-menu {
+      position: fixed;
+      z-index: 1000;
+      background-color: rgba(41, 41, 41, 0.5);
+      color: whitesmoke;
+
+      display: none;
+      flex-direction: column;
+      align-items: center;
+
+      width: 500px;
+      border-radius: 40px;
+    }
+
+    .score-title {
+      font-size: 75px;
+      margin-top: 30px;
+    }
+
+    .points-text {
+      font-size: 30px;
+      margin-bottom: 40px;
+    }
+
+    .button-group {
+      display: flex;
+      width: 70%;
+      justify-content: space-around;
+      margin-bottom: 40px;
+    }
+
+    .button-group button {
+      border: none;
+      height: 100px;
+      background-color: #48B47E;
+      width: 100px;
+      border-radius: 50px;
+    }
+
+    .button-group button:hover {
+      background-color: #61BF90;
+    }
+
+    .button-group button:active {
+      background-color: #48B47E;
+    }
+
   </style>
 </head>
 <body>
   <span class="score-card">
     <img src="images/enemies/enemy.png" alt="">
     <span class="score">: 0</span>
+  </span>
+  <span class="game-over-menu">
+    <span class="score-title">0</span>
+    <span class="points-text">Points</span>
+    <span class="button-group">
+      <button class="start-button">
+        <img src="images/restart-button.png" alt="">
+      </button>
+      <button class="home-buttono">
+        <img src="images/menu-button.png" alt="">
+      </button>
+    </span>
   </span>
   <canvas id="canvas"></canvas>
   <script type="module" src="scripts/main.js"></script>
